@@ -35,7 +35,7 @@ public class DataConf {
         hibernateAdapter.setGenerateDdl(true);
 
         final LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
-        entityManagerFactory.setPackagesToScan("entity");
+        entityManagerFactory.setPackagesToScan("entities");
         entityManagerFactory.setJpaVendorAdapter(hibernateAdapter);
         entityManagerFactory.setDataSource(dataSource());
         entityManagerFactory.afterPropertiesSet();
@@ -48,4 +48,4 @@ public class DataConf {
         return new JpaTransactionManager(entityManagerFactory());
     }
 }
- 
+
