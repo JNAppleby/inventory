@@ -44,4 +44,8 @@ public class ItemServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         assertThat(itemSrv.getAllItems().get(0).equals(item));
     }
 
+    /**
+     *
+     */
+
 }

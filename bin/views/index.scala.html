@@ -1,12 +1,28 @@
-@(message: String)
+@(message: String, itemForm: Form[forms.ItemForm])
+@implicitFieldConstructor = @{ helper.FieldConstructor(customInput.render) }
 
-@main(message){
-Add new Item:
-@helper.form(action = routes.Application.addItem()) {
-        <input name="name"/>
-        <input name="desc"/>
-        <input type="submit"/>
-    }
+@main("Welcome to Play 2.0") {
 
-  <ul id="inventory_list"></ul>
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <a id="titleLink" class="brand" href="/">@message.toUpperCase</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+
+        @helper.form(action = routes.Application.addItem(), 'class -> "well form-horizontal") {
+            @helper.inputText(itemForm("name"), '_label -> "Name")
+            @helper.inputText(itemForm("desc"), '_label -> "Description")
+            <div class="controls">
+                <input type="submit" class="btn btn-primary"/>
+            </div>
+        }
+
+        <ul id="inventory_list"></ul>
+    </div>
+
 }

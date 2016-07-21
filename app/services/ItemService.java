@@ -23,4 +23,13 @@ public interface ItemService {
      * @return
      */
     boolean deleteItemById(Long id);
+
+    /**
+     * Edit an existing item
+     * @param id id of item to edit
+     * @param name edited name
+     * @param desc edited description
+     * @return
+     */
+    Item editItem(Long id, String name, String desc);
 }

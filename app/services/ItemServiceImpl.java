@@ -1,7 +1,6 @@
 package services;
 
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.stereotype.Service;
 import entities.Item;
 
 import java.util.List;
@@ -22,23 +21,28 @@ public class ItemServiceImpl implements ItemService {
         CriteriaQuery<Item> c = em.getCriteriaBuilder().createQuery(Item.class);
         c.from(Item.class);
         return em.createQuery(c).getResultList();
-
-        //return em.createQuery("SELECT * FROM items i", String.class).getResultList();
-
     }
 
     @Override
     @Transactional
     public Item addItem(Item item) {
         em.persist(item);
-        //em.createNamedQuery("").setFlushMode(FlushModeType.COMMIT);
         return item;
     }
 
     @Override
     @Transactional
     public boolean deleteItemById(Long id) {
-        // TODO Auto-generated method stub
         return false;
+    }
+
+    @Override
+    @Transactional
+    public Item editItem(Long id, String name, String desc) {
+        Item item = em.find(Item.class, id);
+        item.setName(name);
+        item.setDesc(desc);
+        em.merge(item);
+        return null;
     }
 }
