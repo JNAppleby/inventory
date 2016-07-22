@@ -60,6 +60,9 @@ public class ItemServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         itemSrv.addItem(item);
 
         assertThat(itemSrv.getAllItems().get(0).equals(item));
+
+        // Adding same item (w duplicate id)
+        itemSrv.addItem(item);
     }
 
     /**
@@ -79,5 +82,11 @@ public class ItemServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         int newCount = items.size();
 
         assertThat(curCount-1).isEqualTo(newCount);
+
+        // Repeated removing of the same item
+        itemSrv.removeItemById(item1.getId());
+
+        // Removing non-existent item
+        itemSrv.removeItemById(300L);
     }
 }
