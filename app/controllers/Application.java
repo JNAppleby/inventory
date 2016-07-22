@@ -39,12 +39,14 @@ public class Application extends Controller {
     public Result addItem() {
         final Form<ItemForm> form = Form.form(forms.ItemForm.class).bindFromRequest();
         if (form.hasErrors()) {
-            return badRequest(index.render("Error", form));
+            return badRequest(index.render("Error adding item!", form));
         }
 
         ItemForm itemForm = form.get();
         Item item = new Item(itemForm.getName(), itemForm.getDesc());
-        itemSrv.addItem(item);
+        if (itemSrv.addItem(item) == null) {
+            return badRequest(index.render("Could not add such item!", form));
+        }
         return redirect(routes.Application.index());
     }
 
