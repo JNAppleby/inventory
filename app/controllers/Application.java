@@ -32,15 +32,20 @@ public class Application extends Controller {
         return ok(index.render("Inventory List", Form.form(forms.ItemForm.class)));
     }
 
-    public Result listItems() {
-        List<Item> items = getAllItems();
-        return ok(Json.toJson(items));
+    public Result listAllItems() {
+        if (itemSrv == null) {
+            log.error("ItemSer is null");
+            return badRequest(index.render("Error", Form.form(forms.ItemForm.class)));
+        } else {
+            List<Item> items = itemSrv.getAllItems();
+            return ok(Json.toJson(items));
+        }
     }
 
     public Result addItem() {
         Form<ItemForm> form = Form.form(forms.ItemForm.class).bindFromRequest();
         if (form.hasErrors()) {
-            return badRequest(index.render("hello, world", form));
+            return badRequest(index.render("Error", form));
         } else {
             ItemForm itemForm = form.get();
             Item item = new Item(itemForm.getName(), itemForm.getDesc());
@@ -50,16 +55,7 @@ public class Application extends Controller {
     }
 
     public Result removeItem(Long id){
-        itemSrv.deleteItemById(id);
+        itemSrv.removeItemById(id);
         return redirect(routes.Application.index());
-    }
-
-    private List<Item> getAllItems() {
-        if (itemSrv == null) {
-            return null;
-        } else {
-            List<Item> items = itemSrv.getAllItems();
-            return items;
-        }
     }
 }

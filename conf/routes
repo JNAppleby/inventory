@@ -12,7 +12,7 @@ GET    /assets/*file   controllers.Assets.at(path="/public", file)
 POST   /addItem        @controllers.Application.addItem()
 
 # List items
-GET    /listItems      @controllers.Application.listItems()
+GET    /listItems      @controllers.Application.listAllItems()
 
 # Delete items
 GET   /removeItem/:id     @controllers.Application.removeItem(id: Long)

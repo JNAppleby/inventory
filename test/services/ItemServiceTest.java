@@ -73,7 +73,7 @@ public class ItemServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         List<Item> items = itemSrv.getAllItems();
         int curCount = items.size();
 
-        itemSrv.deleteItemById(item1.getId());
+        itemSrv.removeItemById(item1.getId());
 
         items = itemSrv.getAllItems();
         int newCount = items.size();
