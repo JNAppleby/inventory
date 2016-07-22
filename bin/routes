@@ -3,13 +3,16 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
+GET    /               controllers.Application.index()
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET    /assets/*file   controllers.Assets.at(path="/public", file)
 
 # Add item
 POST   /addItem        @controllers.Application.addItem()
 
 # List items
-GET    /listItems           @controllers.Application.listItems()
+GET    /listItems      @controllers.Application.listItems()
+
+# Delete items
+GET   /removeItem/:id     @controllers.Application.removeItem(id: Long)

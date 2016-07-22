@@ -15,16 +15,18 @@ var main = (function(){
    */
   var populateData = function(){
     $.getJSON( "/listItems", function( data ) {
-      var invList = $('#inventory_list');
+      var invList = $('#inventory-list');
       $.each( data, function( key, val ) {
         invList.append(
-            $(document.createElement('li')).css({'width':'200px'})
-            .append($(document.createElement('div')).append(val.id).css({'float':'left', 'margin-right':'10px'}))
-            .append($(document.createElement('div')).append(val.name).css({'float':'left', 'margin-right':'10px'}))
-            .append($(document.createElement('div')).append(val.desc))
+            $(document.createElement('tr'))
+            .append($(document.createElement('td')).append(val.id))
+            .append($(document.createElement('td')).append(val.name))
+            .append($(document.createElement('td')).append(val.desc))
+            .append($(document.createElement('td')).append(
+                $(document.createElement('a')).attr({'href':('/removeItem/'+val.id)}).addClass('btn btn-info').append('Remove')
+            ))
         );
       });
-
     });
   };
 

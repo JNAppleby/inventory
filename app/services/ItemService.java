@@ -1,35 +1,26 @@
 package services;
 
+import entities.Item;
+
 import java.util.List;
 
-import entities.Item;
 public interface ItemService {
     /**
      * Get all inventory items from db
-     * @return
+     * @return list of all items from db
      */
     List<Item> getAllItems();
 
     /**
      * Add an inventory item
-     * @param item - item to add
+     * @param item an item to add
      * @return original item on success, null on error
      */
     Item addItem(Item item);
 
     /**
      * Delete an item from the database by id
-     * @param id
-     * @return
+     * @param id the id of an item to delete
      */
-    boolean deleteItemById(Long id);
-
-    /**
-     * Edit an existing item
-     * @param id id of item to edit
-     * @param name edited name
-     * @param desc edited description
-     * @return
-     */
-    Item editItem(Long id, String name, String desc);
+    void deleteItemById(Long id);
 }

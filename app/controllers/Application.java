@@ -14,6 +14,9 @@ import javax.inject.Inject;
 import views.html.index;
 import views.html.main;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import forms.ItemForm;
 import org.springframework.stereotype.Component;
 import entities.Item;
@@ -21,10 +24,12 @@ import entities.Item;
 @Component
 public class Application extends Controller {
 
+    private static final Logger log = LoggerFactory.getLogger(Application.class);
+
     @Inject private ItemService itemSrv;
 
     public static Result index() {
-        return ok(index.render("Your new application is ready.", Form.form(forms.ItemForm.class)));
+        return ok(index.render("Inventory List", Form.form(forms.ItemForm.class)));
     }
 
     public Result listItems() {
@@ -44,12 +49,15 @@ public class Application extends Controller {
         }
     }
 
+    public Result removeItem(Long id){
+        itemSrv.deleteItemById(id);
+        return redirect(routes.Application.index());
+    }
+
     private List<Item> getAllItems() {
         if (itemSrv == null) {
-            System.out.println(">>>>>>>>>>>>>>>>>>>>itemSrv is null");
             return null;
         } else {
-            System.out.println("itemSrv is not null");
             List<Item> items = itemSrv.getAllItems();
             return items;
         }

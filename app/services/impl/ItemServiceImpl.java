@@ -1,5 +1,9 @@
-package services;
+package services.impl;
 
+import services.ItemService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 import entities.Item;
 
@@ -12,6 +16,8 @@ import javax.persistence.criteria.CriteriaQuery;
 
 @Named
 public class ItemServiceImpl implements ItemService {
+
+    private static final Logger log = LoggerFactory.getLogger(ItemService.class);
 
     @PersistenceContext
     private EntityManager em;
@@ -27,22 +33,15 @@ public class ItemServiceImpl implements ItemService {
     @Transactional
     public Item addItem(Item item) {
         em.persist(item);
+        log.info("Added item id="+item.getId());
         return item;
     }
 
     @Override
     @Transactional
-    public boolean deleteItemById(Long id) {
-        return false;
-    }
-
-    @Override
-    @Transactional
-    public Item editItem(Long id, String name, String desc) {
+    public void deleteItemById(Long id) {
         Item item = em.find(Item.class, id);
-        item.setName(name);
-        item.setDesc(desc);
-        em.merge(item);
-        return null;
+        em.remove(item);
+        log.info("Removed item id="+item.getId());
     }
 }
