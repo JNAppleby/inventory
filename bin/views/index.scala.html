@@ -1,6 +1,9 @@
 @(message: String, itemForm: Form[forms.ItemForm])
 @implicitFieldConstructor = @{ helper.FieldConstructor(customInput.render) }
 
+@import helper.form
+@import helper.inputText
+
 @main("Inventory") {
 
     <div class="navbar navbar-fixed-top">
@@ -12,9 +15,9 @@
     </div>
 
     <div class="container">
-        @helper.form(action = routes.Application.addItem(), 'class -> "well form-horizontal") {
-            @helper.inputText(itemForm("name"), '_label -> "Name")
-            @helper.inputText(itemForm("desc"), '_label -> "Description")
+        @form(action = routes.Application.addItem(), 'class -> "well form-horizontal") {
+            @inputText(itemForm("name"), '_label -> "Name")
+            @inputText(itemForm("desc"), '_label -> "Description")
             <div class="controls">
                 <input type="submit" class="btn btn-primary" value="Add Item"/>
             </div>
@@ -29,9 +32,7 @@
             <th>Controls</th>
           </tr>
         </thead>
-        <tbody id="inventory-list">
-        </tbody>
+        <tbody id="inventory-list"></tbody>
       </table>
     </div>
-
 }

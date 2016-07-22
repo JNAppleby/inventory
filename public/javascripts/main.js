@@ -1,14 +1,14 @@
 /**
  * Main JS module
  */
-var main = (function(){
+var main = (function() {
 
   /**
    * Init function
    *
    * @memberOf functions
    */
-  var init = function(){
+  var init = function() {
     populateData();
   };
 
@@ -17,10 +17,10 @@ var main = (function(){
    *
    * @memberOf functions
    */
-  var populateData = function(){
-    $.getJSON( "/listItems", function( data ) {
+  var populateData = function() {
+    $.getJSON("/listItems", function(data) {
       var invList = $('#inventory-list');
-      $.each( data, function( key, val ) {
+      $.each(data, function(key, val) {
         invList.append(
             $(document.createElement('tr'))
               .append($(document.createElement('td')).append(val.id))

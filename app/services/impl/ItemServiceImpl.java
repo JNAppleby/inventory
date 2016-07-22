@@ -32,11 +32,8 @@ public class ItemServiceImpl implements ItemService {
     @Override
     @Transactional
     public Item addItem(Item item) {
-        if(em == null){
-            return null;
-        }
         em.persist(item);
-        log.info("Added item id="+item.getId());
+        log.info("Added item id={}", item.getId());
         return item;
     }
 
@@ -44,11 +41,11 @@ public class ItemServiceImpl implements ItemService {
     @Transactional
     public void removeItemById(Long id) {
         Item item = em.find(Item.class, id);
-        if(item == null){
-            log.error("Error removing item. Non-existent item with id="+id);
-        }else{
+        if (item == null) {
+            log.warn("Cannot removing item. Non-existent item with id={}", id);
+        } else {
             em.remove(item);
-            log.info("Removed item id="+id);
+            log.info("Removed item id={}", id);
         }
     }
 }

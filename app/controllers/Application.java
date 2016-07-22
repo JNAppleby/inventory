@@ -7,7 +7,6 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
-
 import entities.Item;
 import forms.ItemForm;
 import org.springframework.stereotype.Component;
@@ -28,33 +27,28 @@ public class Application extends Controller {
 
     @Inject private ItemService itemSrv;
 
-    public static Result index() {
+    public Result index() {
         return ok(index.render("Inventory List", Form.form(forms.ItemForm.class)));
     }
 
     public Result listAllItems() {
-        if (itemSrv == null) {
-            log.error("ItemSer is null");
-            return badRequest(index.render("Error", Form.form(forms.ItemForm.class)));
-        } else {
-            List<Item> items = itemSrv.getAllItems();
-            return ok(Json.toJson(items));
-        }
+        final List<Item> items = itemSrv.getAllItems();
+        return ok(Json.toJson(items));
     }
 
     public Result addItem() {
-        Form<ItemForm> form = Form.form(forms.ItemForm.class).bindFromRequest();
+        final Form<ItemForm> form = Form.form(forms.ItemForm.class).bindFromRequest();
         if (form.hasErrors()) {
             return badRequest(index.render("Error", form));
-        } else {
-            ItemForm itemForm = form.get();
-            Item item = new Item(itemForm.getName(), itemForm.getDesc());
-            itemSrv.addItem(item);
-            return redirect(routes.Application.index());
         }
+
+        ItemForm itemForm = form.get();
+        Item item = new Item(itemForm.getName(), itemForm.getDesc());
+        itemSrv.addItem(item);
+        return redirect(routes.Application.index());
     }
 
-    public Result removeItem(Long id){
+    public Result removeItem(Long id) {
         itemSrv.removeItemById(id);
         return redirect(routes.Application.index());
     }
