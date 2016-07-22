@@ -7,19 +7,19 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
-import java.util.List;
 
-import javax.inject.Inject;
+import entities.Item;
+import forms.ItemForm;
+import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import views.html.index;
 import views.html.main;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.List;
 
-import forms.ItemForm;
-import org.springframework.stereotype.Component;
-import entities.Item;
+import javax.inject.Inject;
 
 @Component
 public class Application extends Controller {

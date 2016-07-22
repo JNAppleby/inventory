@@ -41,7 +41,11 @@ public class ItemServiceImpl implements ItemService {
     @Transactional
     public void deleteItemById(Long id) {
         Item item = em.find(Item.class, id);
-        em.remove(item);
-        log.info("Removed item id="+item.getId());
+        if(item == null){
+            log.error("Error removing item. Non-existent item with id="+id);
+        }else{
+            em.remove(item);
+            log.info("Removed item id="+id);
+        }
     }
 }
