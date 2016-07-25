@@ -33,16 +33,16 @@
           </tr>
         </thead>
         <tbody id="inventory-list">
-      @for(item <- items) {
-            <tr>
-              <th>@item.getId()</th>
-              <th>@item.getName()</th>
-              <th>@item.getDesc()</th>
-              <th>
-                <a href="/removeItem/@item.getId()" class="btn btn-info">Remove</a>
-              </th>
-            </tr>
-      }
+        @for(item <- items) {
+              <tr>
+                <th>@item.getId()</th>
+                <th>@item.getName()</th>
+                <th>@item.getDesc()</th>
+                <th>
+                  <a href="/removeItem/@item.getId()" class="btn btn-info">Remove</a>
+                </th>
+              </tr>
+        }
         </tbody>
       </table>
     </div>

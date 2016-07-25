@@ -56,7 +56,6 @@ public class Application extends Controller {
         } else {
             if (result == ErrCode.ADD_DUPLICATE_ITEM) {
                 form.reject("name", result.toString());
-                form.reject("I hate pickles");
                 return badRequest(index.render(form, itemSrv.getAllItems(), null));
             }
             return badRequest(index.render(form, itemSrv.getAllItems(), result));
