@@ -40,14 +40,12 @@ public class ItemServiceTest extends AbstractTransactionalJUnit4SpringContextTes
 
         Assert.assertEquals("Wrong initial size of the list, should be 0", 0, items.size());
 
-        Item item1 = new Item("item1", "item1 description");
+        final Item item1 = new Item("item1", "item1 description");
         Assert.assertEquals("Item adding failure", ErrCode.ADD_SUCCESS, itemSrv.addItem(item1));
         items = itemSrv.getAllItems();
 
-        Item retrievedItem = items.get(0);
-
         Assert.assertEquals("Total item count should be 1", 1, items.size());
-        Assert.assertNotNull("Item retrieved is null", retrievedItem);
+        Assert.assertNotNull("Item retrieved is null", items.get(0));
     }
 
     /**
@@ -72,10 +70,7 @@ public class ItemServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         items = itemSrv.getAllItems();
         Assert.assertEquals("Total item count should be 2", 2, items.size());
 
-        Item retrievedItem1 = items.get(0);
-        Item retrievedItem2 = items.get(1);
-
-        Assert.assertNotEquals("Items in the list are not unique, but should have been.", retrievedItem1, retrievedItem2);
+        Assert.assertNotEquals("Items in the list are not unique, but should have been.", items.get(0), items.get(1));
     }
 
     /**
@@ -88,14 +83,13 @@ public class ItemServiceTest extends AbstractTransactionalJUnit4SpringContextTes
 
         Assert.assertEquals("Wrong initial size of the list, should be 0", 0, items.size());
 
-        Item item = new Item("item1", "item1 description");
+        final Item item = new Item("item1", "item1 description");
         Assert.assertEquals("Item adding failure", ErrCode.ADD_SUCCESS, itemSrv.addItem(item));
 
         items = itemSrv.getAllItems();
         Assert.assertEquals("Total item count should be 1", 1, items.size());
 
-        Item retrievedItem = items.get(0);
-        Assert.assertEquals("Retrieved item is not the same as original", item, retrievedItem);
+        Assert.assertEquals("Retrieved item is not the same as original", item, items.get(0));
     }
 
     /**
@@ -108,7 +102,7 @@ public class ItemServiceTest extends AbstractTransactionalJUnit4SpringContextTes
 
         Assert.assertEquals("Wrong initial size of the list, should be 0", 0, items.size());
 
-        Item item = new Item("item1", "item1 description");
+        final Item item = new Item("item1", "item1 description");
         Assert.assertEquals("Item adding failure", ErrCode.ADD_SUCCESS, itemSrv.addItem(item));
 
         items = itemSrv.getAllItems();
@@ -116,13 +110,8 @@ public class ItemServiceTest extends AbstractTransactionalJUnit4SpringContextTes
 
         // Add same exact/original/duplicate item
         Assert.assertEquals("Duplicate item protection fails", ErrCode.ADD_DUPLICATE_ITEM, itemSrv.addItem(item));
-
-        items = itemSrv.getAllItems();
-        Assert.assertEquals("Total item count should still be 1 after adding duplicate item", 1, items.size());
-
-        Item retrievedItem = items.get(0);
-
-        Assert.assertEquals("Retrieved item is not the same as original", item, retrievedItem);
+        Assert.assertEquals("Total item count should still be 1 after adding duplicate item", 1, itemSrv.getAllItems().size());
+        Assert.assertEquals("Retrieved item is not the same as original", item, items.get(0));
     }
 
     /**
@@ -136,20 +125,20 @@ public class ItemServiceTest extends AbstractTransactionalJUnit4SpringContextTes
 
         Assert.assertEquals("Wrong initial size of the list, should be 0", 0, items.size());
 
-        Item item = new Item(itemName, "item1 description");
+        final Item item = new Item(itemName, "item1 description");
         Assert.assertEquals("Item adding failure", ErrCode.ADD_SUCCESS, itemSrv.addItem(item));
 
         items = itemSrv.getAllItems();
         Assert.assertEquals("Total item count should be 1", 1, items.size());
 
         // Add different item, but with duplicate Name
-        Item diffItemSameName = new Item(itemName, "different description");
+        final Item diffItemSameName = new Item(itemName, "different description");
         itemSrv.addItem(diffItemSameName);
 
         items = itemSrv.getAllItems();
         Assert.assertEquals("Total item count should be 1 after addition of different item which has duplicate Name", 1, items.size());
 
-        Item retrievedItem = items.get(0);
+        final Item retrievedItem = items.get(0);
 
         Assert.assertEquals("Retrieved item is not the same as original", item, retrievedItem);
         Assert.assertNotEquals("Retrieved item should NOT be the same as duplicate item that was attempted to be inserted",
@@ -167,8 +156,7 @@ public class ItemServiceTest extends AbstractTransactionalJUnit4SpringContextTes
 
         Assert.assertEquals("ADD_NULL_ITEM error should have been returned", ErrCode.ADD_NULL_ITEM, itemSrv.addItem(null));
 
-        items = itemSrv.getAllItems();
-        Assert.assertEquals("Total item count should be still 0", 0, items.size());
+        Assert.assertEquals("Total item count should be still 0", 0, itemSrv.getAllItems().size());
     }
 
     /**
@@ -182,24 +170,21 @@ public class ItemServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         int initialCount = items.size();
         Assert.assertEquals("Wrong initial size of the list, should be 0", 0, initialCount);
 
-        Item item1 = new Item("item1", "item1 description");
+        final Item item1 = new Item("item1", "item1 description");
         Assert.assertEquals("Item 1 adding failure", ErrCode.ADD_SUCCESS, itemSrv.addItem(item1));
 
         items = itemSrv.getAllItems();
         Assert.assertEquals("Total item count should be 1", 1, items.size());
 
         // Add second item
-        Item item2 = new Item("item2", "item2 description");
+        final Item item2 = new Item("item2", "item2 description");
         Assert.assertEquals("Item 2 adding failure", ErrCode.ADD_SUCCESS, itemSrv.addItem(item2));
 
         items = itemSrv.getAllItems();
         Assert.assertEquals("Total item count should be 2", 2, items.size());
 
-        Item retrievedItem1 = items.get(0);
-        Item retrievedItem2 = items.get(1);
-
-        Assert.assertEquals("Retrieved item1 is not the same as original", item1, retrievedItem1);
-        Assert.assertEquals("Retrieved item2 is not the same as original", item2, retrievedItem2);
+        Assert.assertEquals("Retrieved item1 is not the same as original", item1, items.get(0));
+        Assert.assertEquals("Retrieved item2 is not the same as original", item2, items.get(1));
     }
 
     /**
@@ -212,7 +197,7 @@ public class ItemServiceTest extends AbstractTransactionalJUnit4SpringContextTes
 
         Assert.assertEquals("Wrong initial size of the list, should be 0", 0, items.size());
 
-        Item item1 = new Item("item1", "item1 description");
+        final Item item1 = new Item("item1", "item1 description");
         Assert.assertEquals("Item 1 adding failure", ErrCode.ADD_SUCCESS, itemSrv.addItem(item1));
 
         items = itemSrv.getAllItems();
@@ -222,8 +207,7 @@ public class ItemServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         Assert.assertEquals("Retrieved item1 is not the same as original", item1, retrievedItem1);
 
         Assert.assertEquals("Error removing an item", ErrCode.REMOVE_SUCCESS, itemSrv.removeItemById(retrievedItem1.getId()));
-        items = itemSrv.getAllItems();
-        Assert.assertEquals("Item was removed, count should be back to 0", 0, items.size());
+        Assert.assertEquals("Item was removed, count should be back to 0", 0, itemSrv.getAllItems().size());
     }
 
     /**
@@ -237,8 +221,7 @@ public class ItemServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         Assert.assertEquals("Wrong initial size of the list, should be 0", 0, items.size());
 
         Assert.assertEquals("Should have returned REMOVE_NON_EXISTENT code", ErrCode.REMOVE_NON_EXISTENT, itemSrv.removeItemById(42L));
-        items = itemSrv.getAllItems();
-        Assert.assertEquals("Non-existing item deletion was attempted, count should be still 0", 0, items.size());
+        Assert.assertEquals("Non-existing item deletion was attempted, count should be still 0", 0, itemSrv.getAllItems().size());
     }
 
     /**
@@ -252,8 +235,7 @@ public class ItemServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         Assert.assertEquals("Wrong initial size of the list, should be 0", 0, items.size());
 
         Assert.assertEquals("Should have returned REMOVE_NON_EXISTENT code", ErrCode.REMOVE_NON_EXISTENT, itemSrv.removeItemById(-1L));
-        items = itemSrv.getAllItems();
-        Assert.assertEquals("Negative and non-existing item deletion was attempted, count should be still 0", 0, items.size());
+        Assert.assertEquals("Negative and non-existing item deletion was attempted, count should be still 0", 0, itemSrv.getAllItems().size());
     }
 
     /**
@@ -266,23 +248,21 @@ public class ItemServiceTest extends AbstractTransactionalJUnit4SpringContextTes
 
         Assert.assertEquals("Wrong initial size of the list, should be 0", 0, items.size());
 
-        Item item1 = new Item("item1", "item1 description");
+        final Item item1 = new Item("item1", "item1 description");
         Assert.assertEquals("Item 1 adding failure", ErrCode.ADD_SUCCESS, itemSrv.addItem(item1));
 
         items = itemSrv.getAllItems();
         Assert.assertEquals("One item added, total item count should be 1 now", 1, items.size());
 
-        Item retrievedItem1 = items.get(0);
+        final Item retrievedItem1 = items.get(0);
         Assert.assertEquals("Retrieved item1 is not the same as original", item1, retrievedItem1);
 
         Assert.assertEquals("Error removing an item", ErrCode.REMOVE_SUCCESS, itemSrv.removeItemById(retrievedItem1.getId()));
-        items = itemSrv.getAllItems();
-        Assert.assertEquals("Item was removed, count should be back to 0", 0, items.size());
+        Assert.assertEquals("Item was removed, count should be back to 0", 0, itemSrv.getAllItems().size());
 
         // Removing the same exact item
         Assert.assertEquals("Should return REMOVE_NON_EXISTENT code", ErrCode.REMOVE_NON_EXISTENT, itemSrv.removeItemById(retrievedItem1.getId()));
-        items = itemSrv.getAllItems();
-        Assert.assertEquals("Items count should be still 0 after removing the only item twice in the row", 0, items.size());
+        Assert.assertEquals("Items count should be still 0 after removing the only item twice in the row", 0, itemSrv.getAllItems().size());
     }
 
     /**
@@ -296,21 +276,21 @@ public class ItemServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         int initialCount = items.size();
         Assert.assertEquals("Wrong initial size of the list, should be 0", 0, initialCount);
 
-        Item item1 = new Item("item1", "item1 description");
+        final Item item1 = new Item("item1", "item1 description");
         Assert.assertEquals("Item 1 adding failure", ErrCode.ADD_SUCCESS, itemSrv.addItem(item1));
 
         items = itemSrv.getAllItems();
         Assert.assertEquals("Total item count should be 1", 1, items.size());
 
         // Add second item
-        Item item2 = new Item("item2", "item2 description");
+        final Item item2 = new Item("item2", "item2 description");
         Assert.assertEquals("Item 2 adding failure", ErrCode.ADD_SUCCESS, itemSrv.addItem(item2));
 
         items = itemSrv.getAllItems();
         Assert.assertEquals("Total item count should be 2", 2, items.size());
 
-        Item retrievedItem1 = items.get(0);
-        Item retrievedItem2 = items.get(1);
+        final Item retrievedItem1 = items.get(0);
+        final Item retrievedItem2 = items.get(1);
 
         Assert.assertEquals("Retrieved item1 is not the same as original", item1, retrievedItem1);
         Assert.assertEquals("Retrieved item2 is not the same as original", item2, retrievedItem2);
@@ -320,13 +300,11 @@ public class ItemServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         items = itemSrv.getAllItems();
         Assert.assertEquals("One of two items was removed, count should be 1", 1, items.size());
 
-        Item lastRemainingItem = items.get(0);
         // lastRemainingItem should be the second inserted item
-        Assert.assertEquals("Retrieved item2 is not the same as original", item2, lastRemainingItem);
+        Assert.assertEquals("Retrieved item2 is not the same as original", item2, items.get(0));
 
         // Remove second item
         Assert.assertEquals("Error removing 2nd item", ErrCode.REMOVE_SUCCESS, itemSrv.removeItemById(retrievedItem2.getId()));
-        items = itemSrv.getAllItems();
-        Assert.assertEquals("Last item was removed from db, count should be 0", 0, items.size());
+        Assert.assertEquals("Last item was removed from db, count should be 0", 0, itemSrv.getAllItems().size());
     }
 }

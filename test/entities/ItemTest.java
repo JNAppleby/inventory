@@ -1,22 +1,16 @@
-package services.impl;
+package entities;
 
-import conf.AppConf;
-import conf.TestDataConf;
-import entities.Item;
 import org.junit.Assert;
 import org.junit.Test;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
-@ContextConfiguration(classes = {AppConf.class, TestDataConf.class})
-public class ItemServiceImplTest extends AbstractTransactionalJUnit4SpringContextTests {
+public class ItemTest {
 
     /**
      * Test equals with exact same item
      */
     @Test
     public void equalsSameExactItemTest() {
-        Item item1 = new Item("item1", "item1 description");
+        final Item item1 = new Item("item1", "item1 description");
         Assert.assertEquals("Items are not the same", item1, item1);
     }
 
@@ -28,8 +22,8 @@ public class ItemServiceImplTest extends AbstractTransactionalJUnit4SpringContex
         final String itemName = "item1";
         final String itemDesc = "item1 description";
 
-        Item item1 = new Item(itemName, itemDesc);
-        Item item2 = new Item(itemName, itemDesc);
+        final Item item1 = new Item(itemName, itemDesc);
+        final Item item2 = new Item(itemName, itemDesc);
 
         Assert.assertEquals("Items are not the same", item1, item2);
     }
@@ -39,8 +33,8 @@ public class ItemServiceImplTest extends AbstractTransactionalJUnit4SpringContex
      */
     @Test
     public void equalsDiffItemsTest() {
-        Item item1 = new Item("item1", "item1 desc");
-        Item item2 = new Item("item2", "item2 desc");
+        final Item item1 = new Item("item1", "item1 desc");
+        final Item item2 = new Item("item2", "item2 desc");
 
         Assert.assertNotEquals("Items are evaluated to be the same, while they are not", item1, item2);
     }
@@ -52,8 +46,8 @@ public class ItemServiceImplTest extends AbstractTransactionalJUnit4SpringContex
     public void equalsNullDescTest() {
         final String itemName = "item1";
 
-        Item item1 = new Item(itemName, null);
-        Item item2 = new Item(itemName, null);
+        final Item item1 = new Item(itemName, null);
+        final Item item2 = new Item(itemName, null);
 
         Assert.assertEquals("Items are not the same", item1, item2);
     }
