@@ -1,4 +1,4 @@
-@(message: String, itemForm: Form[forms.ItemForm])
+@(itemForm: Form[forms.ItemForm], items: List[entities.Item], errorCode: errcodes.ErrCode)
 @implicitFieldConstructor = @{ helper.FieldConstructor(customInput.render) }
 
 @import helper.form
@@ -9,7 +9,7 @@
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container-fluid">
-                <a id="titleLink" class="brand" href="/">@message</a>
+                <a id="titleLink" class="brand" href="/">Inventory</a>
             </div>
         </div>
     </div>
@@ -23,6 +23,13 @@
             </div>
         }
 
+        @*if(errorCode != null) {
+          <div class="alert alert-@errorCode.getLevelString() fade in">
+            <!--a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a-->
+            <strong>@errorCode.getLevelString().capitalize!</strong> @errorCode.toString()
+          </div>
+        }*@
+
         <table class="table">
         <thead>
           <tr>
@@ -32,7 +39,18 @@
             <th>Controls</th>
           </tr>
         </thead>
-        <tbody id="inventory-list"></tbody>
+        <tbody id="inventory-list">
+      @for(item <- items) {
+            <tr>
+              <th>@item.getId()</th>
+              <th>@item.getName()</th>
+              <th>@item.getDesc()</th>
+              <th>
+                <a href="/removeItem/@item.getId()" class="btn btn-info">Remove</a>
+              </th>
+            </tr>
+      }
+        </tbody>
       </table>
     </div>
 }

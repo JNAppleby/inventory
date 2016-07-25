@@ -16,6 +16,10 @@ import org.slf4j.LoggerFactory;
 import views.html.index;
 import views.html.main;
 
+import errcodes.ErrLevel;
+
+import errcodes.ErrCode;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -28,7 +32,7 @@ public class Application extends Controller {
     @Inject private ItemService itemSrv;
 
     public Result index() {
-        return ok(index.render("Inventory List", Form.form(forms.ItemForm.class)));
+        return ok(index.render(Form.form(forms.ItemForm.class), itemSrv.getAllItems(), null));
     }
 
     public Result listAllItems() {
@@ -39,19 +43,32 @@ public class Application extends Controller {
     public Result addItem() {
         final Form<ItemForm> form = Form.form(forms.ItemForm.class).bindFromRequest();
         if (form.hasErrors()) {
-            return badRequest(index.render("Error adding item!", form));
+            return badRequest(index.render(form, itemSrv.getAllItems(), null));
         }
 
         ItemForm itemForm = form.get();
         Item item = new Item(itemForm.getName(), itemForm.getDesc());
-        if (itemSrv.addItem(item) == null) {
-            return badRequest(index.render("Could not add such item!", form));
+
+        ErrCode result = itemSrv.addItem(item);
+
+        if (result.getLevel() == ErrLevel.SUCCESS) {
+            return ok(index.render(form, itemSrv.getAllItems(), result));
+        } else {
+            if (result == ErrCode.ADD_DUPLICATE_ITEM) {
+                form.reject("name", result.toString());
+                form.reject("I hate pickles");
+                return badRequest(index.render(form, itemSrv.getAllItems(), null));
+            }
+            return badRequest(index.render(form, itemSrv.getAllItems(), result));
         }
-        return redirect(routes.Application.index());
     }
 
     public Result removeItem(Long id) {
-        itemSrv.removeItemById(id);
-        return redirect(routes.Application.index());
+        ErrCode result = itemSrv.removeItemById(id);
+        if (result.getLevel() == ErrLevel.SUCCESS) {
+            return ok(index.render(Form.form(forms.ItemForm.class), itemSrv.getAllItems(), result));
+        } else {
+            return badRequest(index.render(Form.form(forms.ItemForm.class), itemSrv.getAllItems(), result));
+        }
     }
 }

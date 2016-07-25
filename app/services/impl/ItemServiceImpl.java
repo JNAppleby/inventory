@@ -2,6 +2,8 @@ package services.impl;
 
 import services.ItemService;
 
+import errcodes.ErrCode;
+
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -22,8 +24,7 @@ public class ItemServiceImpl implements ItemService {
 
     private static final Logger log = LoggerFactory.getLogger(ItemService.class);
 
-    @PersistenceContext
-    private EntityManager em;
+    @PersistenceContext private EntityManager em;
 
     @Override
     public List<Item> getAllItems() {
@@ -34,36 +35,35 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     @Transactional
-    public Item addItem(Item item) {
+    public ErrCode addItem(Item item) {
         if (item == null) {
-            log.warn("Item to add is null");
-            return null;
+            return ErrCode.ADD_NULL_ITEM;
         }
 
-        Query q = em.createQuery("SELECT COUNT(i) FROM Item i WHERE i.name = :name");
-        q.setParameter("name", item.getName());
+        Long dupCount = (Long)em.createQuery("SELECT COUNT(i) FROM Item i WHERE i.name = :name")
+                        .setParameter("name", item.getName())
+                        .getSingleResult();
 
-        Long dupCount = (Long)q.getSingleResult();
-
-        if(dupCount > 0){
-            log.info("Item {} already exists, not adding.", item.getId());
-            return null;
+        if (dupCount > 0) {
+            return ErrCode.ADD_DUPLICATE_ITEM;
         }
 
         em.persist(item);
         log.info("Added item id={}", item.getId());
-        return item;
+        return ErrCode.ADD_SUCCESS;
     }
 
     @Override
     @Transactional
-    public void removeItemById(Long id) {
+    public ErrCode removeItemById(Long id) {
         Item item = em.find(Item.class, id);
         if (item == null) {
-            log.warn("Cannot removing item. Non-existent item with id={}", id);
+            log.warn("Cannot remove item. Non-existent item with id={}", id);
+            return ErrCode.REMOVE_NON_EXISTENT;
         } else {
             em.remove(item);
             log.info("Removed item id={}", id);
+            return ErrCode.REMOVE_SUCCESS;
         }
     }
 }
