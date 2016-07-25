@@ -1,7 +1,5 @@
 package services.impl;
 
-import errcodes.ErrCode;
-
 import conf.AppConf;
 import conf.TestDataConf;
 import entities.Item;
@@ -9,10 +7,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
-
-import java.util.List;
-
-import javax.inject.Inject;
 
 @ContextConfiguration(classes = {AppConf.class, TestDataConf.class})
 public class ItemServiceImplTest extends AbstractTransactionalJUnit4SpringContextTests {
