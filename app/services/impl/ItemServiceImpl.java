@@ -28,6 +28,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> getAllItems() {
+        log.debug("getAllItems() is called");
         CriteriaQuery<Item> c = em.getCriteriaBuilder().createQuery(Item.class);
         c.from(Item.class);
         return em.createQuery(c).getResultList();
@@ -37,6 +38,7 @@ public class ItemServiceImpl implements ItemService {
     @Transactional
     public ErrCode addItem(Item item) {
         if (item == null) {
+            log.warn("item is null in addItem()");
             return ErrCode.ADD_NULL_ITEM;
         }
 
@@ -45,6 +47,7 @@ public class ItemServiceImpl implements ItemService {
                         .getSingleResult();
 
         if (dupCount > 0) {
+            log.warn("Duplicate item detected when adding, item id={}", item.getId());
             return ErrCode.ADD_DUPLICATE_ITEM;
         }
 
