@@ -37,6 +37,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     @Transactional
     public ErrCode addItem(Item item) {
+        log.debug("addItem is called, item: {}", item);
         if (item == null) {
             log.warn("item is null in addItem()");
             return ErrCode.ADD_NULL_ITEM;
@@ -59,6 +60,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     @Transactional
     public ErrCode removeItemById(Long id) {
+        log.debug("removeItemById is called, id: {}", id);
         Item item = em.find(Item.class, id);
         if (item == null) {
             log.warn("Cannot remove item. Non-existent item with id={}", id);
