@@ -1,4 +1,3 @@
-This is your new Play application
-=================================
+Inventory App
 
-This file will be packaged with your application, when using `activator dist`.
+This is an extremely simple inventory tracking app, meant to serve as a new employee homework assignment.
