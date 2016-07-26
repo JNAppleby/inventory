@@ -160,6 +160,16 @@ public class ItemServiceTest extends AbstractTransactionalJUnit4SpringContextTes
     }
 
     /**
+     * Add blank item
+     */
+    @Test
+    public void addBlankItemTest() {
+        Item item = new Item();
+
+        Assert.assertEquals("Should have gotten ADD_NAME_MIN_LEN error", ErrCode.ADD_NAME_MIN_LEN, itemSrv.addItem(item));
+    }
+
+    /**
      * Add two items
      */
     @Test

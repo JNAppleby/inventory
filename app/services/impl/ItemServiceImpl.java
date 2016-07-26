@@ -43,6 +43,11 @@ public class ItemServiceImpl implements ItemService {
             return ErrCode.ADD_NULL_ITEM;
         }
 
+        if (item.getName() == null || item.getName().length() < Item.MIN_NAME_LEN) {
+            log.warn("item's Name must be at least 2 characters");
+            return ErrCode.ADD_NAME_MIN_LEN;
+        }
+
         Long dupCount = (Long)em.createQuery("SELECT COUNT(i) FROM Item i WHERE i.name = :name")
                         .setParameter("name", item.getName())
                         .getSingleResult();

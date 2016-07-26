@@ -16,10 +16,11 @@
 
   <logger name="play" level="INFO" />
   <logger name="application" level="INFO" />
-  <logger name="controllers.Application" level="DEBUG" />
+  <logger name="services" level="INFO" />
 
   <root level="INFO">
     <appender-ref ref="STDOUT" />
     <appender-ref ref="FILE" />
   </root>
 </configuration>
+

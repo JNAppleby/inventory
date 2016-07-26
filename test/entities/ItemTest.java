@@ -25,7 +25,7 @@ public class ItemTest {
         final Item item1 = new Item(itemName, itemDesc);
         final Item item2 = new Item(itemName, itemDesc);
 
-        Assert.assertEquals("Items are not the same", item1, item2);
+        Assert.assertEquals("Items should be the same", item1, item2);
     }
 
     /**
@@ -50,5 +50,19 @@ public class ItemTest {
         final Item item2 = new Item(itemName, null);
 
         Assert.assertEquals("Items are not the same", item1, item2);
+    }
+
+    /**
+     * Same Name, but different Description
+     * Items should be different
+     */
+    @Test
+    public void equalsSameNameDiffDescTest() {
+        final String itemName = "item1";
+
+        final Item item1 = new Item(itemName, "diff description 1");
+        final Item item2 = new Item(itemName, "diff description 2");
+
+        Assert.assertNotEquals("Items should not be the same", item1, item2);
     }
 }

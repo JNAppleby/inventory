@@ -1,5 +1,8 @@
 package forms;
 
+import entities.Item;
+
+import play.data.validation.Constraints.MinLength;
 import play.data.validation.Constraints.Required;
 
 /**
@@ -9,7 +12,9 @@ import play.data.validation.Constraints.Required;
  *
  */
 public class ItemForm {
-    @Required private String name;
+    @Required
+    @MinLength(value = Item.MIN_NAME_LEN)
+    private String name;
 
     private String desc;
 

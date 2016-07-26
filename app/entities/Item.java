@@ -12,12 +12,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "item")
 public class Item {
+    public static final int MIN_NAME_LEN = 2;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "description")
