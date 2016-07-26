@@ -32,15 +32,18 @@ public class Application extends Controller {
     @Inject private ItemService itemSrv;
 
     public Result index() {
+        log.debug("/ endpoint requested");
         return ok(index.render(Form.form(forms.ItemForm.class), itemSrv.getAllItems(), null));
     }
 
     public Result listAllItems() {
+        log.debug("/listItems endpoint requested");
         final List<Item> items = itemSrv.getAllItems();
         return ok(Json.toJson(items));
     }
 
     public Result addItem() {
+        log.debug("/addItem endpoint requested");
         final Form<ItemForm> form = Form.form(forms.ItemForm.class).bindFromRequest();
         if (form.hasErrors()) {
             return badRequest(index.render(form, itemSrv.getAllItems(), null));
@@ -63,6 +66,7 @@ public class Application extends Controller {
     }
 
     public Result removeItem(Long id) {
+        log.debug("/removeItem/{} endpoint requested", id);
         ErrCode result = itemSrv.removeItemById(id);
         if (result.getLevel() == ErrLevel.SUCCESS) {
             return ok(index.render(Form.form(forms.ItemForm.class), itemSrv.getAllItems(), result));
