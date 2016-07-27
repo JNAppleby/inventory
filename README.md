@@ -2,7 +2,7 @@
 
 ##Introduction
 
-This is an extremely simple inventory tracking app, meant to serve as a new employee homework assignment and Play Framework practice
+This is an extremely simple inventory tracking app, meant to serve as a new employee homework assignment and Play Framework practice exercise.
 
 ##Requirements
 - Play 2
